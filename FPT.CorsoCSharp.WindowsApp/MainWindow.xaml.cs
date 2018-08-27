@@ -4,19 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Net.Http;
 // using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace FPT.CorsoCSharp.WindowsApp
 {
@@ -50,8 +39,10 @@ namespace FPT.CorsoCSharp.WindowsApp
 
             List<double> pesiPersone = new List<double>();
             List<bool> statoAllarmi = new List<bool>();
-            List<DateTime> compleanniAmici;
+            List<DateTime> compleanniAmici = new List<DateTime>();
+            
             List<Fattura> fatture = new List<Fattura>();
+            var date =  fatture.DammiPagamenti();
             fatture.Add(new Fattura());
 
             pesiPersone.Contains(78);
@@ -81,6 +72,25 @@ namespace FPT.CorsoCSharp.WindowsApp
 
             FatturaPagata fp = new FatturaPagata();
             calc3.Set(fp);
+        }
+
+
+
+
+        private void btnExtMethod_Click(object sender, RoutedEventArgs e)
+        {
+            string codiceFiscale = "DMNLRG76B28I274H";
+
+
+
+            // bool ok3 = ExtensionMethods.IsValid(codiceFiscale);
+            bool valid = codiceFiscale.IsValid();
+
+
+
+
+            bool ok1 = codiceFiscale.Maggiorenne();
+            bool ok2 = codiceFiscale.Maggiorenne("UK");
         }
     }
 }
