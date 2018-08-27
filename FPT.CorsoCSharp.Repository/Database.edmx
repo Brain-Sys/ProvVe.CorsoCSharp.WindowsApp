@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DB_StationServiceModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Stations">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="TIPI_CARBURANTI">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="10" />
+          <Property Name="Price" Type="float" Nullable="false" />
+          <Property Name="Electric" Type="bit" Nullable="false" />
+          <Property Name="Available" Type="int" />
+          <Property Name="Liters" Type="float" />
+          <Property Name="Station_ID" Type="int" />
+        </EntityType>
+        <Association Name="FK_dbo_TIPI_CARBURANTI_dbo_Stations_Station_ID">
+          <End Role="Stations" Type="Self.Stations" Multiplicity="0..1" />
+          <End Role="TIPI_CARBURANTI" Type="Self.TIPI_CARBURANTI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TIPI_CARBURANTI">
+              <PropertyRef Name="Station_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_StationServiceModelStoreContainer">
+          <EntitySet Name="Stations" EntityType="Self.Stations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TIPI_CARBURANTI" EntityType="Self.TIPI_CARBURANTI" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_TIPI_CARBURANTI_dbo_Stations_Station_ID" Association="Self.FK_dbo_TIPI_CARBURANTI_dbo_Stations_Station_ID">
+            <End Role="Stations" EntitySet="Stations" />
+            <End Role="TIPI_CARBURANTI" EntitySet="TIPI_CARBURANTI" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_StationServiceModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Station">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TIPI_CARBURANTI" Relationship="Self.FK_dbo_TIPI_CARBURANTI_dbo_Stations_Station_ID" FromRole="Stations" ToRole="TIPI_CARBURANTI" />
+        </EntityType>
+        <EntityType Name="TIPI_CARBURANTI">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Double" Nullable="false" />
+          <Property Name="Electric" Type="Boolean" Nullable="false" />
+          <Property Name="Available" Type="Int32" />
+          <Property Name="Liters" Type="Double" />
+          <Property Name="Station_ID" Type="Int32" />
+          <NavigationProperty Name="Station" Relationship="Self.FK_dbo_TIPI_CARBURANTI_dbo_Stations_Station_ID" FromRole="TIPI_CARBURANTI" ToRole="Stations" />
+        </EntityType>
+        <Association Name="FK_dbo_TIPI_CARBURANTI_dbo_Stations_Station_ID">
+          <End Role="Stations" Type="Self.Station" Multiplicity="0..1" />
+          <End Role="TIPI_CARBURANTI" Type="Self.TIPI_CARBURANTI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TIPI_CARBURANTI">
+              <PropertyRef Name="Station_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_StationServiceEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Stations" EntityType="Self.Station" />
+          <EntitySet Name="TIPI_CARBURANTI" EntityType="Self.TIPI_CARBURANTI" />
+          <AssociationSet Name="FK_dbo_TIPI_CARBURANTI_dbo_Stations_Station_ID" Association="Self.FK_dbo_TIPI_CARBURANTI_dbo_Stations_Station_ID">
+            <End Role="Stations" EntitySet="Stations" />
+            <End Role="TIPI_CARBURANTI" EntitySet="TIPI_CARBURANTI" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB_StationServiceModelStoreContainer" CdmEntityContainer="DB_StationServiceEntities">
+          <EntitySetMapping Name="Stations">
+            <EntityTypeMapping TypeName="DB_StationServiceModel.Station">
+              <MappingFragment StoreEntitySet="Stations">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TIPI_CARBURANTI">
+            <EntityTypeMapping TypeName="DB_StationServiceModel.TIPI_CARBURANTI">
+              <MappingFragment StoreEntitySet="TIPI_CARBURANTI">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Electric" ColumnName="Electric" />
+                <ScalarProperty Name="Available" ColumnName="Available" />
+                <ScalarProperty Name="Liters" ColumnName="Liters" />
+                <ScalarProperty Name="Station_ID" ColumnName="Station_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FPT.CorsoCSharp.WindowsApp"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FPT.CorsoCSharp.DomainModel", "FPT.CorsoCSharp.DomainModel\FPT.CorsoCSharp.DomainModel.csproj", "{6D4B7754-0E7C-4793-898D-62B110666A6A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FPT.CorsoCSharp.Repository", "FPT.CorsoCSharp.Repository\FPT.CorsoCSharp.Repository.csproj", "{7B88575E-0EBD-4D73-B72F-6A6408E0DB5A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{6D4B7754-0E7C-4793-898D-62B110666A6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D4B7754-0E7C-4793-898D-62B110666A6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D4B7754-0E7C-4793-898D-62B110666A6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B88575E-0EBD-4D73-B72F-6A6408E0DB5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B88575E-0EBD-4D73-B72F-6A6408E0DB5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B88575E-0EBD-4D73-B72F-6A6408E0DB5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B88575E-0EBD-4D73-B72F-6A6408E0DB5A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

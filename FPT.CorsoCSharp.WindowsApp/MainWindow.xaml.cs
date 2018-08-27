@@ -14,6 +14,8 @@ namespace FPT.CorsoCSharp.WindowsApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        FatturaPagata fp = new FatturaPagata();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -35,14 +37,21 @@ namespace FPT.CorsoCSharp.WindowsApp
             list1.Add("mdlkgnkldngkdffnkj");
             list1.Add("mdlkgnkldngkdffnkj");
             // list1.Add(34);
-            BitArray ba = new BitArray(new byte[] { 5, 8, 10 });
+
+            var bytes = new byte[3] { 5, 8, 10 };
+            BitArray ba = new BitArray(bytes);
 
             List<double> pesiPersone = new List<double>();
             List<bool> statoAllarmi = new List<bool>();
             List<DateTime> compleanniAmici = new List<DateTime>();
-            
-            List<Fattura> fatture = new List<Fattura>();
-            var date =  fatture.DammiPagamenti();
+
+            List<Fattura> fatture = new List<Fattura>()
+            {
+                new Fattura(),
+                new Fattura(),
+                new Fattura()
+            };
+            var date = fatture.DammiPagamenti();
             fatture.Add(new Fattura());
 
             pesiPersone.Contains(78);
@@ -70,27 +79,63 @@ namespace FPT.CorsoCSharp.WindowsApp
             // Calcolatrice<BitArray> calc4 = new Calcolatrice<BitArray>();
 
 
-            FatturaPagata fp = new FatturaPagata();
+
             calc3.Set(fp);
+
+            // Anonymous Type
+            var persona1 = new
+            {
+                Nome = "",
+                Cognome = "",
+                Eta = 42
+            };
+
+            // Object Initializer
+            var persona2 = new Persona("Fabrizio")
+            {
+                Nome = "",
+                Cognome = "",
+                Eta = 42
+            };
+
+            //persona2.Nome = "";
+            //persona2.Cognome = "";
+            //persona2.Eta = 42;
+            var pari = new List<int>() { 2, 4, 6, 8, 10 };
+
+            int? annoNascita = 2018;
+            annoNascita = null;
+            annoNascita = 7;
+            annoNascita++;
+            annoNascita--;
+            bool pari2 = annoNascita % 2 == 0;
+
+            if (!annoNascita.HasValue)
+            {
+                // MsgBox
+            }
+            else
+            {
+                Console.WriteLine(annoNascita.Value);
+            }
+            int x = annoNascita.GetValueOrDefault();
+
+            int? distanza1 = null;
+            int? distanza2 = 1;
+            int? totale = distanza1 + distanza2;
         }
-
-
-
 
         private void btnExtMethod_Click(object sender, RoutedEventArgs e)
         {
-            string codiceFiscale = "DMNLRG76B28I274H";
-
+            var codiceFiscale = "DMNLRG76B28I274H";
+            var nuovaFattura = fp;
 
 
             // bool ok3 = ExtensionMethods.IsValid(codiceFiscale);
-            bool valid = codiceFiscale.IsValid();
+            var valid = codiceFiscale.IsValid();
 
-
-
-
-            bool ok1 = codiceFiscale.Maggiorenne();
-            bool ok2 = codiceFiscale.Maggiorenne("UK");
+            var ok1 = codiceFiscale.Maggiorenne();
+            var ok2 = codiceFiscale.Maggiorenne("UK");
         }
     }
 }

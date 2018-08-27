@@ -2,7 +2,7 @@
 
 namespace FPT.CorsoCSharp.DomainModel
 {
-    public class Fattura : DomainObject, IDisposable, ISomma
+    public partial class Fattura : DomainObject, IDisposable, ISomma
     {
         // 76.000 byte
         public byte[] LastPdf { get; set; }
