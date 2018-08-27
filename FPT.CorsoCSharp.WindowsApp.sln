@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2003
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FPT.CorsoCSharp.WindowsApp", "FPT.CorsoCSharp.WindowsApp\FPT.CorsoCSharp.WindowsApp.csproj", "{FB06D5E1-728B-492B-ACBA-566B419CF476}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FPT.CorsoCSharp.DomainModel", "FPT.CorsoCSharp.DomainModel\FPT.CorsoCSharp.DomainModel.csproj", "{6D4B7754-0E7C-4793-898D-62B110666A6A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FB06D5E1-728B-492B-ACBA-566B419CF476}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB06D5E1-728B-492B-ACBA-566B419CF476}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB06D5E1-728B-492B-ACBA-566B419CF476}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB06D5E1-728B-492B-ACBA-566B419CF476}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D4B7754-0E7C-4793-898D-62B110666A6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D4B7754-0E7C-4793-898D-62B110666A6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D4B7754-0E7C-4793-898D-62B110666A6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D4B7754-0E7C-4793-898D-62B110666A6A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {53A9A542-31BB-461F-96FC-C55F14E0282C}
+	EndGlobalSection
+EndGlobal
