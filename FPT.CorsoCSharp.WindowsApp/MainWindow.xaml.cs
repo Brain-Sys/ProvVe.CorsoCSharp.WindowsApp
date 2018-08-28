@@ -1,5 +1,6 @@
 ﻿using FPT.CorsoCSharp.DomainModel;
 using FPT.CorsoCSharp.DomainModel.CustomEventArgs;
+using FPT.CorsoCSharp.DomainModel.CustomExceptions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
-// using System.Linq;
+using System.Linq;
 using System.Windows;
 
 namespace FPT.CorsoCSharp.WindowsApp
@@ -268,15 +269,62 @@ namespace FPT.CorsoCSharp.WindowsApp
             {
                 fp.Paga();
             }
+            catch (FPTException ex)
+            {
+                Debug.WriteLine(ex.B);
+            }
             catch (FileNotFoundException ex)
             {
-                
+
             }
             catch (Exception ex)
             {
                 // Log
                 MessageBox.Show("Oopss, qualcosa è andato storto!\r\n\r\n" + ex.Message);
             }
+        }
+
+
+
+
+
+
+
+
+
+
+
+        private void btnLinq_Click(object sender, RoutedEventArgs e)
+        {
+            // 2867
+            IEnumerable<FileInfo> list = new DirectoryInfo
+                (@"c:\windows\system32").GetFiles("*.*");
+
+            // Where
+            var soloDll1 = from f in list where filtroPerDll(f) select f;
+            var soloDll2 = list.Where(filtroPerDll);
+
+            // list.Count() > 0
+            if (list != null && list.Any())
+            {
+
+            }
+
+            //.ToList();
+
+            foreach (var item in soloDll2)
+            {
+
+            }
+
+            // Metodi di materializzazione (anche delle liste)
+            // ToList()
+        }
+
+        private bool filtroPerDll(FileInfo f)
+        {
+            Debug.WriteLine(DateTime.Now.Ticks);
+            return f.Extension == ".dll";
         }
     }
 }

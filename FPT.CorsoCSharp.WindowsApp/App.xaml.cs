@@ -15,6 +15,9 @@ namespace FPT.CorsoCSharp.WindowsApp
     {
         public App()
         {
+            AppDomain.CurrentDomain.UnhandledException +=
+                CurrentDomain_UnhandledException;
+
             AppDomain.CurrentDomain.FirstChanceException += (o, s) =>
             {
                 // LOG
@@ -22,6 +25,11 @@ namespace FPT.CorsoCSharp.WindowsApp
             };
 
             Application.Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
+        }
+
+        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            object obj = e.ExceptionObject;
         }
 
         private void Current_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)

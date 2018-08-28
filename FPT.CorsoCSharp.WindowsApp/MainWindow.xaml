@@ -15,6 +15,9 @@
                     />
             <Button Content="Paga" Background="Orange" x:Name="btnPay"
                     Click="btnPay_Click" />
+
+            <Button Content="LINQ" Background="Orange" x:Name="btnLinq"
+                    Click="btnLinq_Click" />
         </StackPanel>
     </Grid>
 </Window>

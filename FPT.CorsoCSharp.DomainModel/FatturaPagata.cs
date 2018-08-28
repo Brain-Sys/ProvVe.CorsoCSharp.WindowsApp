@@ -1,4 +1,5 @@
 ﻿using FPT.CorsoCSharp.DomainModel.CustomEventArgs;
+using FPT.CorsoCSharp.DomainModel.CustomExceptions;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,7 +31,8 @@ namespace FPT.CorsoCSharp.DomainModel
         {
             if (this.DataPagamento != DateTime.MinValue)
             {
-                throw new InvalidOperationException("La fattura è già stata pagata!");
+                // throw new InvalidOperationException("La fattura è già stata pagata!");
+                throw new FPTException("La fattura è già stata pagata!");
             }
 
             this.DataPagamento = DateTime.Now;
