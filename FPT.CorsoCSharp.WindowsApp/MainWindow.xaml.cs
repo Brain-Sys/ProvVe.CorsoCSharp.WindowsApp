@@ -11,6 +11,7 @@ using System.IO;
 using System.Net;
 using System.Linq;
 using System.Windows;
+using System.Configuration;
 
 namespace FPT.CorsoCSharp.WindowsApp
 {
@@ -310,7 +311,18 @@ namespace FPT.CorsoCSharp.WindowsApp
 
             }
 
-            //.ToList();
+            var filtroDaConfig = list
+                .Where(f => f.Extension == ConfigurationManager.AppSettings["Extension"])
+                .ToList();
+
+            // Ne esiste almeno uno che....è più grande di 50K?
+            bool esiste50K = list.Any(f => f.Length > 50 * 1024);
+            FileInfo file50K = list.FirstOrDefault(f => f.Length > 50000 * 1024);
+
+            if (file50K != null)
+            {
+
+            }
 
             foreach (var item in soloDll2)
             {
@@ -319,6 +331,13 @@ namespace FPT.CorsoCSharp.WindowsApp
 
             // Metodi di materializzazione (anche delle liste)
             // ToList()
+            // FirstOrDefault()
+            // First()
+            // LastOrDefault()
+            // Last()
+            // SingleOrDefault()
+            // Single()
+            // Any()
         }
 
         private bool filtroPerDll(FileInfo f)
