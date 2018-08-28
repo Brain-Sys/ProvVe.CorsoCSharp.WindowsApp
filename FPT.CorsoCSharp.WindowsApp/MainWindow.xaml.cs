@@ -335,12 +335,21 @@ namespace FPT.CorsoCSharp.WindowsApp
                 .Where(f => f.Attributes == FileAttributes.Hidden)
                 .Count();
             FileInfo fi = list.ElementAtOrDefault(50000);
+
+
             var fileOrdinati = list
+                .Where(f => f.Name.Contains("p"))
+                .ToList()
                 .OrderBy(f => f.Name)
                 .ThenBy(f => f.Length)
-                .ThenByDescending(f => f.DirectoryName)
-                .ToList();
+                .ThenByDescending(f => f.DirectoryName);
+                
+
+
+
+
             int elementPerPage = 20;
+
             var primaPagina = list.Skip(40)
                 .Take(elementPerPage)
                 .ToList();
@@ -353,6 +362,20 @@ namespace FPT.CorsoCSharp.WindowsApp
                     Big = f.Length > 500000
                 })
                 .ToList();
+
+            List<IGrouping<string, FileInfo>> raggruppati =
+                list.GroupBy(f => f.Extension).ToList();
+
+            foreach (IGrouping<string, FileInfo> item in raggruppati)
+            {
+                // Key contiene l'estensione
+                string ext = item.Key;
+
+                foreach (FileInfo file in item)
+                {
+
+                }
+            }
 
             
 
