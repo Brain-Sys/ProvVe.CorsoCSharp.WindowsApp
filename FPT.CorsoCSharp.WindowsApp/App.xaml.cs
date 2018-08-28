@@ -13,5 +13,20 @@ namespace FPT.CorsoCSharp.WindowsApp
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            AppDomain.CurrentDomain.FirstChanceException += (o, s) =>
+            {
+                // LOG
+                // Binding WPF
+            };
+
+            Application.Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
+        }
+
+        private void Current_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            e.Handled = true;
+        }
     }
 }

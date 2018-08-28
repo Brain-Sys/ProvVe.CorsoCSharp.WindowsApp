@@ -13,6 +13,8 @@
             <Button Content="Download" x:Name="btnDownload"
                     Click="btnDownload_Click"
                     />
+            <Button Content="Paga" Background="Orange" x:Name="btnPay"
+                    Click="btnPay_Click" />
         </StackPanel>
     </Grid>
 </Window>

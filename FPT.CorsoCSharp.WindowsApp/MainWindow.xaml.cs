@@ -1,10 +1,12 @@
 ﻿using FPT.CorsoCSharp.DomainModel;
+using FPT.CorsoCSharp.DomainModel.CustomEventArgs;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Diagnostics;
+using System.IO;
 using System.Net;
 // using System.Linq;
 using System.Windows;
@@ -63,7 +65,7 @@ namespace FPT.CorsoCSharp.WindowsApp
             sequenza += m1;
             sequenza += m1;
             sequenza += m1;
-            sequenza = null;
+            // sequenza = null;
 
             try
             {
@@ -75,7 +77,7 @@ namespace FPT.CorsoCSharp.WindowsApp
             }
 
             sequenza = sequenza - m2;
-            sequenza();
+            //sequenza();
             Delegate[] elenco = sequenza.GetInvocationList();
 
             // L'indirizzo di memoria del metodo chiamato InitializeComponent
@@ -146,7 +148,7 @@ namespace FPT.CorsoCSharp.WindowsApp
 
 
 
-            calc3.Set(fp);
+            // calc3.Set(fp);
 
             // Anonymous Type
             var persona1 = new
@@ -189,6 +191,21 @@ namespace FPT.CorsoCSharp.WindowsApp
             int? distanza1 = null;
             int? distanza2 = 1;
             int? totale = distanza1 + distanza2;
+
+            // Mi registro l'evento FatturaAppenaPagata
+            fp.FatturaAppenaPagata += fattura_FatturaAppenaPagata;
+
+            // Non riesco a deregistrare l'evento perchè non ho un nome
+            // da utilizzare con -=
+            fp.FatturaAppenaPagata += (o, s) => { };
+
+        }
+
+        private void fattura_FatturaAppenaPagata(object sender, FatturaPagataEventArgs e)
+        {
+            MessageBox.Show(
+                    $"La fattura {e.Fattura.Numero} è stata pagata alle ore {e.Timestamp.ToShortTimeString()}!"
+                    );
         }
 
         private string metodo(DateTime p1, int p2, List<bool> p3)
@@ -244,5 +261,22 @@ namespace FPT.CorsoCSharp.WindowsApp
         private string step2(string input) { return input + "B"; }
         private string step3(string input) { return input + "C"; }
         private string step4(string input) { return input + "D"; }
+
+        private void btnPay_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                fp.Paga();
+            }
+            catch (FileNotFoundException ex)
+            {
+                
+            }
+            catch (Exception ex)
+            {
+                // Log
+                MessageBox.Show("Oopss, qualcosa è andato storto!\r\n\r\n" + ex.Message);
+            }
+        }
     }
 }
