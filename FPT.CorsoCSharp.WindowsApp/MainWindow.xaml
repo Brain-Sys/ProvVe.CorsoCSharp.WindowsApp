@@ -7,7 +7,12 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Content="EXTENSION METHOD" x:Name="btnExtMethod"
+        <StackPanel>
+        <Button Background="Green" FontWeight="Bold" Content="EXTENSION METHOD" x:Name="btnExtMethod"
                 Click="btnExtMethod_Click" />
+            <Button Content="Download" x:Name="btnDownload"
+                    Click="btnDownload_Click"
+                    />
+        </StackPanel>
     </Grid>
 </Window>

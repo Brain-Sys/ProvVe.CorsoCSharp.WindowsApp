@@ -4,20 +4,86 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Diagnostics;
+using System.Net;
 // using System.Linq;
 using System.Windows;
 
 namespace FPT.CorsoCSharp.WindowsApp
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
+        // Action restituisce sempre void
+        Action<int, DateTime, int?, int?> act2;
+        Action<List<int>> act3;
+        Action act;
+        delegate void Metodo();
+
+        Func<int> Random = () => { return 6; };
+        Func<DateTime, int, List<bool>, string> act4;
+
+        delegate string ElaboraByte(string raw);
+        delegate int Aritmetica(int a, int b);
         FatturaPagata fp = new FatturaPagata();
 
         public MainWindow()
         {
+            int x = Random();
+            act = InitializeComponent;
+            act2 = (int a, DateTime b, int? c, int? d) => { };
+
+            string r = "_";
+
+            if (DateTime.Now.DayOfWeek == DayOfWeek.Monday)
+            {
+                act4 = metodo;
+            }
+            else
+            {
+                act4 = metodo;
+            }
+
+            string str = act4(DateTime.Now, 9, new List<bool>() { true, false });
+
+            ElaboraByte sequenza2 = step3;
+            sequenza2 += step4;
+            sequenza2 += step1;
+            sequenza2 += step4;
+            sequenza2 += step2;
+
+            foreach (ElaboraByte item in sequenza2.GetInvocationList())
+            {
+                r = item.Invoke(r);
+            }
+
+            string finale = sequenza2("_");
+
+
+            Metodo sequenza = new Metodo(m1) + m1 + m1;
+            sequenza += m1;
+            sequenza += m1;
+            sequenza += m1;
+            sequenza = null;
+
+            try
+            {
+                sequenza();
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            sequenza = sequenza - m2;
+            sequenza();
+            Delegate[] elenco = sequenza.GetInvocationList();
+
+            // L'indirizzo di memoria del metodo chiamato InitializeComponent
+            Metodo puntatore = InitializeComponent;
+            Aritmetica somma = this.sommaDueNumeri;
+            Aritmetica somma1 = new Aritmetica(sommaDueNumeri);
+            int risultato1 = somma(8, 17);
+            int risultato2 = sommaDueNumeri(8, 17, () => { });
             InitializeComponent();
 
             ArrayList list = new ArrayList(20);
@@ -118,11 +184,31 @@ namespace FPT.CorsoCSharp.WindowsApp
             {
                 Console.WriteLine(annoNascita.Value);
             }
-            int x = annoNascita.GetValueOrDefault();
+            int x5 = annoNascita.GetValueOrDefault();
 
             int? distanza1 = null;
             int? distanza2 = 1;
             int? totale = distanza1 + distanza2;
+        }
+
+        private string metodo(DateTime p1, int p2, List<bool> p3)
+        {
+            return "---------------";
+        }
+
+        private int sommaDueNumeri(int a, int b)
+        {
+            return a + b;
+        }
+
+        private int sommaDueNumeri(int a, int b, Metodo quandoHaFinito)
+        {
+            int result = a + b;
+
+            // Chiama il metodo di callback, se passato in input
+            quandoHaFinito?.Invoke();
+
+            return result;
         }
 
         private void btnExtMethod_Click(object sender, RoutedEventArgs e)
@@ -137,5 +223,26 @@ namespace FPT.CorsoCSharp.WindowsApp
             var ok1 = codiceFiscale.Maggiorenne();
             var ok2 = codiceFiscale.Maggiorenne("UK");
         }
+
+        private void btnDownload_Click(object sender, RoutedEventArgs e)
+        {
+            WebClient client = new WebClient();
+            // client.DownloadStringCompleted += ho_finito;
+            // client.DownloadStringAsync(new Uri(""));
+        }
+
+        private void m1() { Debug.WriteLine("m1"); }
+        private void m2()
+        {
+            throw new InvalidOperationException();
+            Debug.WriteLine("m2");
+        }
+        private void m3() { Debug.WriteLine("m3"); }
+        private void m4() { Debug.WriteLine("m4"); }
+
+        private string step1(string input) { return input + "A"; }
+        private string step2(string input) { return input + "B"; }
+        private string step3(string input) { return input + "C"; }
+        private string step4(string input) { return input + "D"; }
     }
 }
