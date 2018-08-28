@@ -12,6 +12,7 @@ using System.Net;
 using System.Linq;
 using System.Windows;
 using System.Configuration;
+using System.Windows.Controls;
 
 namespace FPT.CorsoCSharp.WindowsApp
 {
@@ -318,6 +319,44 @@ namespace FPT.CorsoCSharp.WindowsApp
             // Ne esiste almeno uno che....è più grande di 50K?
             bool esiste50K = list.Any(f => f.Length > 50 * 1024);
             FileInfo file50K = list.FirstOrDefault(f => f.Length > 50000 * 1024);
+            bool esistonoTutti = list
+                .All(f => f.CreationTime.Year < 2015 && !f.IsReadOnly);
+
+            var xyz = list
+                //.Where(f => f.CreationTime.Year < 2015)
+                //.Where(f => !f.IsReadOnly)
+                .Where(f => f.Extension == ".exe")
+                .Average(f => f.Length)
+                .ToString() + " bytes";
+
+            int soloNascosti1 = list
+                .Count(f => f.Attributes == FileAttributes.Hidden);
+            int soloNascosti2 = list
+                .Where(f => f.Attributes == FileAttributes.Hidden)
+                .Count();
+            FileInfo fi = list.ElementAtOrDefault(50000);
+            var fileOrdinati = list
+                .OrderBy(f => f.Name)
+                .ThenBy(f => f.Length)
+                .ThenByDescending(f => f.DirectoryName)
+                .ToList();
+            int elementPerPage = 20;
+            var primaPagina = list.Skip(40)
+                .Take(elementPerPage)
+                .ToList();
+
+            var toolbar = list.TakeWhile(f => f.Extension != ".ini")
+                .Select(f => new TemplateButton
+                {
+                    Etichetta = f.Name,
+                    Colore = "Red",
+                    Big = f.Length > 500000
+                })
+                .ToList();
+
+            
+
+            this.toolbar.ItemsSource = toolbar;
 
             if (file50K != null)
             {
@@ -345,5 +384,12 @@ namespace FPT.CorsoCSharp.WindowsApp
             Debug.WriteLine(DateTime.Now.Ticks);
             return f.Extension == ".dll";
         }
+    }
+
+    internal class TemplateButton
+    {
+        public string Etichetta { get; set; }
+        public string Colore { get; set; }
+        public bool Big { get; set; }
     }
 }

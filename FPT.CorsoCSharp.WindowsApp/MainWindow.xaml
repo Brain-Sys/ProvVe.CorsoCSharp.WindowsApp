@@ -7,6 +7,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
         <StackPanel>
         <Button Background="Green" FontWeight="Bold" Content="EXTENSION METHOD" x:Name="btnExtMethod"
                 Click="btnExtMethod_Click" />
@@ -19,5 +23,17 @@
             <Button Content="LINQ" Background="Orange" x:Name="btnLinq"
                     Click="btnLinq_Click" />
         </StackPanel>
+
+        <ListView x:Name="toolbar" Grid.Row="1">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock FontWeight="Bold"
+                               FontSize="36"
+                               Background="{Binding Colore}"
+                               Text="{Binding Etichetta}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
     </Grid>
 </Window>
