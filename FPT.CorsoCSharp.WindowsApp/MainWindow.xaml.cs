@@ -16,6 +16,7 @@ using System.Windows.Controls;
 using FPT.CorsoCSharp.Repository;
 using System.Xml.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace FPT.CorsoCSharp.WindowsApp
 {
@@ -249,17 +250,22 @@ namespace FPT.CorsoCSharp.WindowsApp
             var ok2 = codiceFiscale.Maggiorenne("UK");
         }
 
-        private void btnDownload_Click(object sender, RoutedEventArgs e)
+        private async void btnDownload_Click(object sender, RoutedEventArgs e)
         {
             WebClient client = new WebClient();
 
             // Chiamata sincrona bloccante per la UI
             // string str = client.DownloadString("http://www.google.com");
 
-            client.DownloadStringCompleted += (s2, e2) => {
-                string str2 = e2.Result;
-            };
-            client.DownloadStringAsync(new Uri("http://www.google.com"));
+            //client.DownloadStringCompleted += (s2, e2) => {
+            //    string str2 = e2.Result;
+            //};
+            //client.DownloadStringAsync(new Uri("http://www.google.com"));
+
+            // Task<string> t = client.DownloadStringTaskAsync("http://www.google.com");
+            // string html = t.Result;
+
+            string html = await client.DownloadStringTaskAsync("http://www.google.com");
         }
 
         private void m1() { Debug.WriteLine("m1"); }

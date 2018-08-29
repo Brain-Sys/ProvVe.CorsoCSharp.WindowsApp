@@ -124,6 +124,11 @@ namespace FPT.CorsoCSharp.ViewModels
         // Ciò che deve fare il comando Login invocato dalla UI
         private async void loginCommandExecute()
         {
+            await Task.Factory.StartNew<List<string>>(() =>
+            {
+                return new List<string>() { "a", "b", "c" };
+            });
+
             await Task.Run(async () => {
                 var dir = new DirectoryInfo(@"C:\Windows\System32");
                 var files = dir.GetFiles("*.*").OrderByDescending(f => f.Length);

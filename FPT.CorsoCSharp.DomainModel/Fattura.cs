@@ -25,12 +25,29 @@ namespace FPT.CorsoCSharp.DomainModel
 
         }
 
+        public Fattura()
+        {
+
+        }
+
         public static Fattura operator +(Fattura f1, Fattura f2)
         {
             return new Fattura()
             {
                 Importo = f1.Importo + f2.Importo
             };
+        }
+
+        public static class Factory
+        {
+            static int index = 0;
+            private static Fattura[] pool =
+                (Fattura[])Array.CreateInstance(typeof(Fattura), 20);
+
+            public static Fattura Create()
+            {
+                return new Fattura();
+            }
         }
     }
 }

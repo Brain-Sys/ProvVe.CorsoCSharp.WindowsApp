@@ -27,8 +27,6 @@ namespace FPT.CorsoCSharp.ViewModels
                 }
             });
 
-
-
             t.ContinueWith(prev => { }, TaskContinuationOptions.OnlyOnFaulted);
             t.ContinueWith(prev => { }, TaskContinuationOptions.OnlyOnRanToCompletion);
 

@@ -8,10 +8,10 @@ namespace FPT.CorsoCSharp.DomainModel
     {
         public bool Pagata { get; set; }
 
-        public Fattura()
-        {
+        //public Fattura()
+        //{
             
-        }
+        //}
 
         //public override string ToString()
         //{
