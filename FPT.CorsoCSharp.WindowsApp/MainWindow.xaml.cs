@@ -15,6 +15,7 @@ using System.Configuration;
 using System.Windows.Controls;
 using FPT.CorsoCSharp.Repository;
 using System.Xml.Linq;
+using System.Threading;
 
 namespace FPT.CorsoCSharp.WindowsApp
 {
@@ -379,7 +380,15 @@ namespace FPT.CorsoCSharp.WindowsApp
                 }
             }
 
-            
+            var token = new CancellationTokenSource();
+            // PLINQ
+            var ricerca = list.AsParallel()
+                .WithDegreeOfParallelism(2)
+                .WithCancellation(token.Token)
+                .Where(f => f.Name.Contains("ll"))
+                .ToList();
+
+            token.Cancel();
 
             this.toolbar.ItemsSource = toolbar;
 
@@ -412,6 +421,14 @@ namespace FPT.CorsoCSharp.WindowsApp
 
         private void btnDatabase_Click(object sender, RoutedEventArgs e)
         {
+            Action a1;              // void
+            Func<double> f2;        // restituire qualcosa
+            Predicate<string> p3;   // restituire bool
+            Func<string, bool> f4;
+
+            p3 = (s) => { return s.Contains("aa"); };
+            p3 = (s) => s.Contains("aa");
+
             var ctx = new Repository.DB_StationServiceEntities();
             ctx.Database.Log = (s) => { Debug.WriteLine(s); };
             var tabella = ctx.TIPI_CARBURANTI
@@ -421,11 +438,16 @@ namespace FPT.CorsoCSharp.WindowsApp
                 .ToList()
                 .All(o => o.Liters != 0);
 
+            ctx.TIPI_CARBURANTI.Any(c => p3(c.Name));
 
             XDocument doc = XDocument.Load("http://192.168.50.116:9056/GetAlarms?format=xml");
             var ricerca = from n in doc.DescendantNodes()
                           where ((XElement)n).Name == "img"
                           select n;
+
+
+            
+
         }
     }
 
