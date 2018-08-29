@@ -13,6 +13,8 @@ using System.Linq;
 using System.Windows;
 using System.Configuration;
 using System.Windows.Controls;
+using FPT.CorsoCSharp.Repository;
+using System.Xml.Linq;
 
 namespace FPT.CorsoCSharp.WindowsApp
 {
@@ -406,6 +408,24 @@ namespace FPT.CorsoCSharp.WindowsApp
         {
             Debug.WriteLine(DateTime.Now.Ticks);
             return f.Extension == ".dll";
+        }
+
+        private void btnDatabase_Click(object sender, RoutedEventArgs e)
+        {
+            var ctx = new Repository.DB_StationServiceEntities();
+            ctx.Database.Log = (s) => { Debug.WriteLine(s); };
+            var tabella = ctx.TIPI_CARBURANTI
+                .Where(c => c.Price > 0.0)
+                .OrderByDescending(c => c.Name)
+                //.Select(o => Mapper.Map<TIPI_CARBURANTI, TCDto>(o))
+                .ToList()
+                .All(o => o.Liters != 0);
+
+
+            XDocument doc = XDocument.Load("http://192.168.50.116:9056/GetAlarms?format=xml");
+            var ricerca = from n in doc.DescendantNodes()
+                          where ((XElement)n).Name == "img"
+                          select n;
         }
     }
 

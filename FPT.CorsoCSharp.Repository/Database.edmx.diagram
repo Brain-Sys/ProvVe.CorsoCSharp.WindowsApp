@@ -6,7 +6,7 @@
     <edmx:Diagrams>
       <Diagram DiagramId="c719ae8db73c45379570b8f4127d6926" Name="Diagram1">
         <EntityTypeShape EntityType="DB_StationServiceModel.Station" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_StationServiceModel.TIPI_CARBURANTI" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_StationServiceModel.TIPI_CARBURANTI" Width="1.5" PointX="3.75" PointY="1.5" IsExpanded="true" />
         <AssociationConnector Association="DB_StationServiceModel.FK_dbo_TIPI_CARBURANTI_dbo_Stations_Station_ID" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>

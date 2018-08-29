@@ -35,7 +35,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -98,6 +105,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -110,6 +118,10 @@
     <ProjectReference Include="..\FPT.CorsoCSharp.DomainModel\FPT.CorsoCSharp.DomainModel.csproj">
       <Project>{6d4b7754-0e7c-4793-898d-62b110666a6a}</Project>
       <Name>FPT.CorsoCSharp.DomainModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FPT.CorsoCSharp.Repository\FPT.CorsoCSharp.Repository.csproj">
+      <Project>{7b88575e-0ebd-4d73-b72f-6a6408e0db5a}</Project>
+      <Name>FPT.CorsoCSharp.Repository</Name>
     </ProjectReference>
     <ProjectReference Include="..\FPT.CorsoCSharp.ViewModels\FPT.CorsoCSharp.ViewModels.csproj">
       <Project>{76c17410-f48f-43ce-b819-112308a3f64d}</Project>

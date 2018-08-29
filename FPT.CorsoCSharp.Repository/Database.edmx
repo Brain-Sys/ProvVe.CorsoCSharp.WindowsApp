@@ -90,6 +90,9 @@
             <End Role="TIPI_CARBURANTI" EntitySet="TIPI_CARBURANTI" />
           </AssociationSet>
         </EntityContainer>
+        <EnumType Name="OrderStates" >
+          <Member Name="Paied" Value="0" />
+        </EnumType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

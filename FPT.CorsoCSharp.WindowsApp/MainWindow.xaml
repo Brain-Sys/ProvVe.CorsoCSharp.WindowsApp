@@ -22,6 +22,9 @@
 
             <Button Content="LINQ" Background="Orange" x:Name="btnLinq"
                     Click="btnLinq_Click" />
+
+            <Button Content="Database" x:Name="btnDatabase"
+                    Click="btnDatabase_Click" />
         </StackPanel>
 
         <ListView x:Name="toolbar" Grid.Row="1">
