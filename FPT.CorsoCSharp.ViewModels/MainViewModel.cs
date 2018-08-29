@@ -17,10 +17,12 @@ namespace FPT.CorsoCSharp.ViewModels
     // 
     public class MainViewModel : ViewModelBase
     {
+        HttpClient client = new HttpClient();
         private Timer timer;
 
         // Nessuna proprietà che dipende dal framework della UI
 
+        public bool IsBusy { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
 
@@ -106,6 +108,52 @@ namespace FPT.CorsoCSharp.ViewModels
             };
 
             // await this.loginCommandExecute();
+            init();
+        }
+
+        private void init()
+        {
+            this.IsBusy = true;
+            //string html = await client.GetStringAsync("http://blog.vivendobyte.net");
+            //byte[] bytes = await client.GetByteArrayAsync("http://www.vivendobyte.net");
+
+            Task<string> t1 = client.GetStringAsync("http://blog.vivendobyte.net");
+            Task<byte[]> t2 = client.GetByteArrayAsync("http://www.repubblico.it");
+            Task<byte[]> t3 = new Task<byte[]>(() => {
+                t2.RunSynchronously();
+                throw new InvalidOperationException();
+            }, TaskCreationOptions.AttachedToParent);
+
+            Task t4 = new Task(() =>
+                Task.Factory.StartNew(() => {
+                    Task.Factory.StartNew(() => {
+                        Task.Factory.StartNew(() => {
+                            throw new InvalidOperationException();   
+                        },
+                            TaskCreationOptions.AttachedToParent);
+
+                        throw new FormatException("xyz");
+
+                    }, TaskCreationOptions.AttachedToParent);
+                }, TaskCreationOptions.AttachedToParent));
+
+            try
+            {
+                t4.Start();
+                Task.WaitAll(t4);
+                // int x = Task.WaitAny(t1, t2);
+            }
+            catch (AggregateException exc)
+            {
+                AggregateException eccezioni = exc.Flatten();
+
+                foreach (Exception item in eccezioni.InnerExceptions)
+                {
+                    Debug.WriteLine(item.Message);
+                }
+            }
+
+            this.IsBusy = false;
         }
 
         private void deleteCommandExecute(int obj)
