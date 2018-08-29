@@ -6,11 +6,16 @@ namespace FPT.CorsoCSharp.DomainModel
 {
     public partial class Fattura
     {
-        public bool Pagata { get; private set; }
+        public bool Pagata { get; set; }
 
         public Fattura()
         {
             
         }
+
+        //public override string ToString()
+        //{
+        //    return "n.fat. " + this.Numero;
+        //}
     }
 }

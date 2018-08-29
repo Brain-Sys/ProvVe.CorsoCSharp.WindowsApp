@@ -36,6 +36,8 @@ namespace FPT.CorsoCSharp.WindowsApp
 
         public MainWindow()
         {
+            int thId = Thread.CurrentThread.ManagedThreadId;
+
             int x = Random();
             act = InitializeComponent;
             act2 = (int a, DateTime b, int? c, int? d) => { };
@@ -250,8 +252,14 @@ namespace FPT.CorsoCSharp.WindowsApp
         private void btnDownload_Click(object sender, RoutedEventArgs e)
         {
             WebClient client = new WebClient();
-            // client.DownloadStringCompleted += ho_finito;
-            // client.DownloadStringAsync(new Uri(""));
+
+            // Chiamata sincrona bloccante per la UI
+            // string str = client.DownloadString("http://www.google.com");
+
+            client.DownloadStringCompleted += (s2, e2) => {
+                string str2 = e2.Result;
+            };
+            client.DownloadStringAsync(new Uri("http://www.google.com"));
         }
 
         private void m1() { Debug.WriteLine("m1"); }

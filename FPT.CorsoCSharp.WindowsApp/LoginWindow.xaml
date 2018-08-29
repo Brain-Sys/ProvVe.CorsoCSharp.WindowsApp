@@ -10,12 +10,62 @@
 
     <Window.Resources>
         <vm:MainViewModel x:Key="viewmodel" />
+
+        <DataTemplate x:Key="intTemplate">
+            <DockPanel>
+                <Button Command="{Binding DeleteCommand,Source={StaticResource viewmodel}}"
+                                    CommandParameter="{Binding}"
+                                    Content="Elimina" DockPanel.Dock="Right" />
+                <TextBlock Text="{Binding}" />
+            </DockPanel>
+        </DataTemplate>
     </Window.Resources>
+
+    <Window.InputBindings>
+        <KeyBinding Key="L" Modifiers="Alt"
+                    Command="{Binding LoginCommand,Source={StaticResource viewmodel}}" />
+    </Window.InputBindings>
 
     <Grid DataContext="{StaticResource viewmodel}">
         <StackPanel>
-            <TextBlock Text="{Binding Username}" />
-            <TextBlock Text="{Binding Password}" />
+            <TextBox Text="{Binding Username}" />
+            <TextBox Text="{Binding Password}" />
+            <Button Content="LOGIN" FontSize="20"
+                    Command="{Binding LoginCommand}" />
+
+            <StackPanel Orientation="Horizontal">
+                <ListBox Height="400" Width="200"
+                          ItemsSource="{Binding Numbers,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                      HorizontalContentAlignment="Stretch"
+                      ItemTemplate="{StaticResource intTemplate}">
+                    <!--<ListView.ItemTemplate>
+                    <DataTemplate>
+                        <DockPanel>
+                            <Button Command="{Binding DeleteCommand,Source={StaticResource viewmodel}}"
+                                    CommandParameter="{Binding}"
+                                    Content="Elimina" DockPanel.Dock="Right" />
+                            <TextBlock Text="{Binding}" />
+                        </DockPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>-->
+                </ListBox>
+                <ListView ItemsSource="{Binding Invoices}" Width="150" Height="400"
+                          HorizontalContentAlignment="Stretch">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+                                <Button Content="PAGA!" DockPanel.Dock="Right"
+                                        Command="{Binding PayInvoiceCommand,Source={StaticResource viewmodel}}"
+                                        CommandParameter="{Binding}" />
+                                <TextBlock>
+                                <!--<Run Text="n°" Foreground="Red" />-->
+                                    <Run Text="{Binding Numero,StringFormat='n° {0}'}" Foreground="Black" FontSize="18" />
+                                </TextBlock>
+                            </DockPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Window>
