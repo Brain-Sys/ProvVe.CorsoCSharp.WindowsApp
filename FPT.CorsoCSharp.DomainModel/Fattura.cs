@@ -19,6 +19,11 @@ namespace FPT.CorsoCSharp.DomainModel
             this.LastPdf = null;
         }
 
+        public double Somma(int x)
+        {
+            return x;
+        }
+
         public double Somma(Fattura fattura)
         {
             return this.Importo + fattura.Importo;

@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>FPT.CorsoCSharp.ConsoleTestApp</RootNamespace>
     <AssemblyName>FPT.CorsoCSharp.ConsoleTestApp</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -46,11 +46,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DinamicoCustom.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FPT.CorsoCSharp.DomainModel\FPT.CorsoCSharp.DomainModel.csproj">
+      <Project>{6D4B7754-0E7C-4793-898D-62B110666A6A}</Project>
+      <Name>FPT.CorsoCSharp.DomainModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
