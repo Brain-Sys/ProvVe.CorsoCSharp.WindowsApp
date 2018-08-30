@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FPT.CorsoCSharp.DomainModel
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FPT.CorsoCSharp.Repository", "FPT.CorsoCSharp.Repository\FPT.CorsoCSharp.Repository.csproj", "{7B88575E-0EBD-4D73-B72F-6A6408E0DB5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FPT.CorsoCSharp.ViewModels", "FPT.CorsoCSharp.ViewModels\FPT.CorsoCSharp.ViewModels.csproj", "{76C17410-F48F-43CE-B819-112308A3F64D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FPT.CorsoCSharp.ViewModels", "FPT.CorsoCSharp.ViewModels\FPT.CorsoCSharp.ViewModels.csproj", "{76C17410-F48F-43CE-B819-112308A3F64D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FPT.CorsoCSharp.ConsoleTestApp", "FPT.CorsoCSharp.ConsoleTestApp\FPT.CorsoCSharp.ConsoleTestApp.csproj", "{BF6D25AF-26CC-4081-BA91-C0FAD0995C8C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{76C17410-F48F-43CE-B819-112308A3F64D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76C17410-F48F-43CE-B819-112308A3F64D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76C17410-F48F-43CE-B819-112308A3F64D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF6D25AF-26CC-4081-BA91-C0FAD0995C8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF6D25AF-26CC-4081-BA91-C0FAD0995C8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF6D25AF-26CC-4081-BA91-C0FAD0995C8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF6D25AF-26CC-4081-BA91-C0FAD0995C8C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

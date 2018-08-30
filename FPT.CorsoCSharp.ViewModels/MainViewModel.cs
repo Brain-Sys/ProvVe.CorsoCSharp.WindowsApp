@@ -91,6 +91,7 @@ namespace FPT.CorsoCSharp.ViewModels
         public RelayCommand CancelCopyCommand { get; set; }
         public RelayCommand<int> DeleteCommand { get; set; }
         public RelayCommand<Fattura> PayInvoiceCommand { get; set; }
+        public RelayCommand ParallelCommand { get; set; }
 
         // Far scattare una foto
         // Leggere un barcode
@@ -142,6 +143,27 @@ namespace FPT.CorsoCSharp.ViewModels
                 //cts.CancelAfter(5000);
             }, () => cts != null && !cts.IsCancellationRequested && this.IsBusy);
 
+            this.ParallelCommand = new RelayCommand(() => {
+                Stopwatch sw = new Stopwatch();
+                //sw.Start();
+                //var result = Parallel.ForEach(this.Invoices, faQualcosaSuFattura);
+                //sw.Stop();
+                //Debug.WriteLine(sw.Elapsed.ToString());
+
+                Parallel.For(0, 100, (index, state) => { });
+                Parallel.Invoke(new ParallelOptions() { CancellationToken = cts.Token },
+                    new Action[] { });
+
+                sw.Start();
+                foreach (var item in this.Invoices)
+                {
+                    faQualcosaSuFattura(item);
+                }
+                sw.Stop();
+                Debug.WriteLine(sw.Elapsed.ToString());
+
+            });
+
             this.Numbers = new List<int>() { 1, 6, 10, 87, 42 };
             this.Invoices = new ObservableCollection<Fattura>()
             {
@@ -151,8 +173,24 @@ namespace FPT.CorsoCSharp.ViewModels
                 new Fattura() { Numero = "4"},
             };
 
+            Random rnd = new Random((int)DateTime.Now.Ticks);
+            for (int i = 0; i < 100000; i++)
+            {
+                this.Invoices.Add(new Fattura()
+                {
+                    Numero = rnd.Next(1, 560000).ToString(),
+                    Importo = rnd.Next(1000, 40000)
+                });
+            }
+
             // await this.loginCommandExecute();
             init();
+        }
+
+        private async void faQualcosaSuFattura(Fattura f)
+        {
+            await Task.Delay(2);
+            f.Importo = 230.0;
         }
 
         private void init()

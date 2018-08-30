@@ -24,6 +24,8 @@
     <Window.InputBindings>
         <KeyBinding Key="L" Modifiers="Alt"
                     Command="{Binding LoginCommand,Source={StaticResource viewmodel}}" />
+        <KeyBinding Key="P" Modifiers="Alt"
+                    Command="{Binding ParallelCommand,Source={StaticResource viewmodel}}" />
     </Window.InputBindings>
 
     <Grid DataContext="{StaticResource viewmodel}">
