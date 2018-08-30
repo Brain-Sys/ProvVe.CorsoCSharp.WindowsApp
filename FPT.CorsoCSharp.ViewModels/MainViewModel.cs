@@ -17,12 +17,23 @@ namespace FPT.CorsoCSharp.ViewModels
     // 
     public class MainViewModel : ViewModelBase
     {
+        CancellationTokenSource cts;
         HttpClient client = new HttpClient();
         private Timer timer;
 
         // Nessuna proprietà che dipende dal framework della UI
 
-        public bool IsBusy { get; set; }
+        private bool isBusy;
+        public bool IsBusy
+        {
+            get { return isBusy; }
+            set
+            {
+                isBusy = value;
+                base.RaisePropertyChanged();
+            }
+        }
+
         public string Username { get; set; }
         public string Password { get; set; }
 
@@ -30,7 +41,9 @@ namespace FPT.CorsoCSharp.ViewModels
         public ObservableCollection<Fattura> Invoices
         {
             get { return invoices; }
-            set { invoices = value;
+            set
+            {
+                invoices = value;
                 base.RaisePropertyChanged();
             }
         }
@@ -39,9 +52,32 @@ namespace FPT.CorsoCSharp.ViewModels
         public List<int> Numbers
         {
             get { return numbers; }
-            set { numbers = value;
+            set
+            {
+                numbers = value;
                 base.RaisePropertyChanged();
             }
+        }
+
+        private int count;
+        public int Count
+        {
+            get { return count; }
+            set { count = value; base.RaisePropertyChanged(); }
+        }
+
+        private int total;
+        public int Total
+        {
+            get { return total; }
+            set { total = value; base.RaisePropertyChanged(); }
+        }
+
+        private string currentFile;
+        public string CurrentFile
+        {
+            get { return currentFile; }
+            set { currentFile = value; base.RaisePropertyChanged(); }
         }
 
         // Delegate che tengono aperta la porta verso codice specifico
@@ -51,6 +87,8 @@ namespace FPT.CorsoCSharp.ViewModels
 
         // Comandi esposti dal viewmodel
         public RelayCommand LoginCommand { get; set; }
+        public RelayCommand StartCopyCommand { get; set; }
+        public RelayCommand CancelCopyCommand { get; set; }
         public RelayCommand<int> DeleteCommand { get; set; }
         public RelayCommand<Fattura> PayInvoiceCommand { get; set; }
 
@@ -97,6 +135,12 @@ namespace FPT.CorsoCSharp.ViewModels
             {
                 f.Pagata = !f.Pagata;
             });
+            this.StartCopyCommand = new RelayCommand(copyFiles);
+            this.CancelCopyCommand = new RelayCommand(() =>
+            {
+                cts.Cancel();
+                //cts.CancelAfter(5000);
+            }, () => cts != null && !cts.IsCancellationRequested && this.IsBusy);
 
             this.Numbers = new List<int>() { 1, 6, 10, 87, 42 };
             this.Invoices = new ObservableCollection<Fattura>()
@@ -119,20 +163,24 @@ namespace FPT.CorsoCSharp.ViewModels
 
             Task<string> t1 = client.GetStringAsync("http://blog.vivendobyte.net");
             Task<byte[]> t2 = client.GetByteArrayAsync("http://www.repubblico.it");
-            Task<byte[]> t3 = new Task<byte[]>(() => {
+            Task<byte[]> t3 = new Task<byte[]>(() =>
+            {
                 t2.RunSynchronously();
                 throw new InvalidOperationException();
             }, TaskCreationOptions.AttachedToParent);
 
             Task t4 = new Task(() =>
-                Task.Factory.StartNew(() => {
-                    Task.Factory.StartNew(() => {
-                        Task.Factory.StartNew(() => {
-                            throw new InvalidOperationException();   
+                Task.Factory.StartNew(() =>
+                {
+                    Task.Factory.StartNew(() =>
+                    {
+                        Task.Factory.StartNew(() =>
+                        {
+                            //throw new InvalidOperationException();   
                         },
                             TaskCreationOptions.AttachedToParent);
 
-                        throw new FormatException("xyz");
+                        //throw new FormatException("xyz");
 
                     }, TaskCreationOptions.AttachedToParent);
                 }, TaskCreationOptions.AttachedToParent));
@@ -140,7 +188,8 @@ namespace FPT.CorsoCSharp.ViewModels
             try
             {
                 t4.Start();
-                Task.WaitAll(t4);
+                t4.Wait();
+                //Task.WaitAll(t4);
                 // int x = Task.WaitAny(t1, t2);
             }
             catch (AggregateException exc)
@@ -169,6 +218,55 @@ namespace FPT.CorsoCSharp.ViewModels
             return true;
         }
 
+        private async void copyFiles()
+        {
+            this.IsBusy = true;
+            cts = new CancellationTokenSource();
+            CancellationToken token = cts.Token;
+
+            try
+            {
+                await Task.Run(() =>
+                {
+                    var dir = new DirectoryInfo(@"C:\Windows\System32");
+                    var files = dir.GetFiles("*.*").OrderByDescending(f => f.Length);
+                    this.Total = files.Count();
+                    this.Count = 0;
+
+                    token.Register(() => {
+                        // Operazioni "indipendenti" dal Task che era in esecuzione
+                        // token.ThrowIfCancellationRequested();
+                        return;
+                    });
+
+                    foreach (FileInfo f in files)
+                    {
+                        if (cts.IsCancellationRequested)
+                        {
+                            // token.ThrowIfCancellationRequested();
+                            break;
+                        }
+
+                        this.Count++;
+                        string newFilename = "E:\\Destination\\" + f.Name;
+                        this.CurrentFile = newFilename;
+                        File.Copy(f.FullName, newFilename, true);
+                    }
+                }, token);
+            }
+            catch (OperationCanceledException ex)
+            {
+                
+            }
+            finally
+            {
+                this.IsBusy = false;
+            }
+
+            // MessageBox verso la UI
+            this.IsBusy = false;
+        }
+
         // Ciò che deve fare il comando Login invocato dalla UI
         private async void loginCommandExecute()
         {
@@ -177,7 +275,8 @@ namespace FPT.CorsoCSharp.ViewModels
                 return new List<string>() { "a", "b", "c" };
             });
 
-            await Task.Run(async () => {
+            await Task.Run(async () =>
+            {
                 var dir = new DirectoryInfo(@"C:\Windows\System32");
                 var files = dir.GetFiles("*.*").OrderByDescending(f => f.Length);
 
@@ -186,7 +285,7 @@ namespace FPT.CorsoCSharp.ViewModels
                     Debug.WriteLine(DateTime.Now.ToString("HH:mm:ss.fff"));
                     await FileIO.CopyAsync(item.FullName, "X:\\File.tmp");
                     Debug.WriteLine(DateTime.Now.ToString("HH:mm:ss.fff"));
-                    
+
                     File.Copy(item.FullName, "E:\\File.tmp", true);
                     Debug.WriteLine(DateTime.Now.ToString("HH:mm:ss.fff"));
                 }

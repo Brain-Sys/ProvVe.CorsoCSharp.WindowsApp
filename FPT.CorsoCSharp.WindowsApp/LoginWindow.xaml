@@ -32,6 +32,19 @@
             <TextBox Text="{Binding Password}" />
             <Button Content="LOGIN" FontSize="20"
                     Command="{Binding LoginCommand}" />
+            <StackPanel Orientation="Horizontal">
+                <Button Content="COPY" FontSize="20"
+                        Command="{Binding StartCopyCommand}" />
+                <Button Margin="16,0,0,0" Content="CANCEL COPY"
+                        FontSize="20" Command="{Binding CancelCopyCommand}" />
+                <Grid>
+                    <ProgressBar Value="{Binding Count}" Minimum="0"
+                                 Maximum="{Binding Total}"
+                                 Width="500" Height="12" VerticalAlignment="Center" />
+                    <TextBlock Text="{Binding CurrentFile}" Width="500" TextAlignment="Center"
+                               VerticalAlignment="Center" />
+                </Grid>
+            </StackPanel>
 
             <StackPanel Orientation="Horizontal">
                 <ListBox Height="400" Width="200"
