@@ -1,6 +1,7 @@
 ﻿using FPT.CorsoCSharp.DomainModel;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,6 +9,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -145,6 +147,7 @@ namespace FPT.CorsoCSharp.ViewModels
 
             this.ParallelCommand = new RelayCommand(() => {
                 Stopwatch sw = new Stopwatch();
+
                 //sw.Start();
                 //var result = Parallel.ForEach(this.Invoices, faQualcosaSuFattura);
                 //sw.Stop();
@@ -183,10 +186,27 @@ namespace FPT.CorsoCSharp.ViewModels
                 });
             }
 
+            Type type = typeof(Fattura);
+            var campi = type.GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
+            FieldInfo fi = type.GetField("<Note2>k__BackingField",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            fi.SetValue(this.Invoices[0], "56");
+
+            Task t = new Task(() => { });
+            Task t2 = new Task(() => { });
+            FieldInfo[] fields = typeof(Task).GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
+
+            // Metto 99 nell'ID di t2
+            fields[0].SetValue(t2, 99);
+
+            // Copio lo stesso ID (99) in t1
+            fields[0].SetValue(t, fields[0].GetValue(t2));
+
             // await this.loginCommandExecute();
             init();
         }
 
+        [DebuggerNonUserCode]
         private async void faQualcosaSuFattura(Fattura f)
         {
             await Task.Delay(2);
@@ -315,20 +335,23 @@ namespace FPT.CorsoCSharp.ViewModels
 
             await Task.Run(async () =>
             {
-                var dir = new DirectoryInfo(@"C:\Windows\System32");
-                var files = dir.GetFiles("*.*").OrderByDescending(f => f.Length);
+                //var dir = new DirectoryInfo(@"C:\Windows\System32");
+                //var files = dir.GetFiles("*.*").OrderByDescending(f => f.Length);
 
-                foreach (var item in files)
-                {
-                    Debug.WriteLine(DateTime.Now.ToString("HH:mm:ss.fff"));
-                    await FileIO.CopyAsync(item.FullName, "X:\\File.tmp");
-                    Debug.WriteLine(DateTime.Now.ToString("HH:mm:ss.fff"));
+                //foreach (var item in files)
+                //{
+                //    Debug.WriteLine(DateTime.Now.ToString("HH:mm:ss.fff"));
+                //    await FileIO.CopyAsync(item.FullName, "X:\\File.tmp");
+                //    Debug.WriteLine(DateTime.Now.ToString("HH:mm:ss.fff"));
 
-                    File.Copy(item.FullName, "E:\\File.tmp", true);
-                    Debug.WriteLine(DateTime.Now.ToString("HH:mm:ss.fff"));
-                }
+                //    File.Copy(item.FullName, "E:\\File.tmp", true);
+                //    Debug.WriteLine(DateTime.Now.ToString("HH:mm:ss.fff"));
+                //}
 
             });
+
+            // Devo "navigare" verso la finestra dell'applicazione vera e propria
+            Messenger.Default.Send<string>("MainWindow");
         }
 
         private void test()

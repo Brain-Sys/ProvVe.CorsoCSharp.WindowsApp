@@ -4,10 +4,14 @@ namespace FPT.CorsoCSharp.DomainModel
 {
     public partial class Fattura : DomainObject, IDisposable, ISomma
     {
+        private int _state;
+
         // 76.000 byte
         public byte[] LastPdf { get; set; }
         public string Numero { get; set; }
         public double Importo { get; set; }
+        public string Note { get; private set; }
+        public string Note2 { get; }
 
         // Garbage Collector
         public void Dispose()
@@ -27,7 +31,7 @@ namespace FPT.CorsoCSharp.DomainModel
 
         public Fattura()
         {
-
+            this.Note2 = "gdnkjgndkjgnfdkjgnfdkj";
         }
 
         public static Fattura operator +(Fattura f1, Fattura f2)
